@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'accessory_create' %}"><button class="btn" style="float:right; margin-top: 65px;">Add Accessory</button></a>
+<h1>Accessories</h1>
+<hr>
+<!-- {% if accessories.count %} -->
+{% for accessory in accessories %}
+<a href="/accessories/{{accessory.id}}/">
+    <div class="card">
+        <a href="{% url 'accessory_detail' accessory.id %}">
+            <div class="card-content">
+                <div class="row">
+                <div class="col s2">
+                    <img style="width: 100px; height: 100px;">
+                </div>
+                <div class="col s10">
+                <span class="card-title">
+                    <h4>{{ accessory.name }}</h4>
+                </span>
+                <p>${{accessory.price}}</p>
+            </div>
+            </div>
+        </div>
+        </a>
+    </div>
+</a>
+{% endfor %}
+<!-- {% else %} -->
+<!-- <p>No Accesories Available</p> -->
+<!-- {% endif %} -->
+{% endblock %}

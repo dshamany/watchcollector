@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<h1><span>{{ watch.name }}</span> Details</h1>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <h4>{{ watch.model_name }}</h4>
+                <p>{{ watch.make }}</p>
+                <p>{{ watch.get_movement_display }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'watch_update' watch.id %}" class="blue-text">Edit</a>
+                <a href="{% url 'watch_delete' watch.id %}" class="red-text">Delete</a>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col s6">
+        {% if watch.photo_set.all %} {% for photo in watch.photo_set.all %}
+        <img class="responsive-img card-panel" src="{{photo.url}}"> {% endfor %} {% else %}
+
+        <form action="{% url 'add_photo' watch.id %}" method="POST" enctype="multipart/form-data" class="card-panel">
+            {% csrf_token %}
+            <input type="file" name='photo-file'>
+            <br><br>
+            <input type="submit" class="btn green" value="Upload Image">
+        </form>
+        {% endif %}
+    </div>
+    <div class='col s6'>
+        {% if accessories.count %} {% for accessory in accessories %}
+        <div class="card">
+            <div class="card-content">
+                <p>{{accessory.name}}</p>
+                <p><i>{{accessory.price}}</i></p>
+            </div>
+        </div>
+        {% endfor %} {% else %}
+        <p>No Accessories Available</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

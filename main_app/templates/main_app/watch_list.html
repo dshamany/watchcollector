@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'watch_create' %}"><button class="btn" style="float:right; margin-top: 65px;">Add New Watch</button></a>
+<h1>Watch Collection</h1>
+<hr> {% for watch in watch_list %}
+<div class="card">
+    <a href="{% url 'watch_detail' watch.id %}">
+        <div class="card-content">
+            <div class="row">
+                <div class="col s3">
+                    <div id="title-image" style="background-image: url({{watch.photo_set.first}})">
+                    </div>
+                </div>
+                <div class="col s9">
+                    <span class="card-title">
+                        <h4><b>{{watch.model_name}}</b></h4>
+                        <h6>{{ watch.make }}</h6>
+                        </span>
+                    <p><b>Reference: </b>{{ watch.model_ref }}</p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% endfor %} {% endblock %}
