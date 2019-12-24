@@ -111,3 +111,7 @@ def add_photo(request, watch_id):
         except:
             print('Error while uploading file to s3')
     return redirect('watch_detail', watch_id)
+
+def remove_photo(request, watch_id, photo_id):
+    Photo.objects.get(id=photo_id).delete()
+    return redirect('watch_detail', watch_id)

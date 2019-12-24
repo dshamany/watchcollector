@@ -10,8 +10,9 @@ urlpatterns = [
     path('watches/<int:pk>/edit/', views.WatchUpdate.as_view(), name='watch_update'),
     path('watches/<int:pk>/delete/', views.WatchDelete.as_view(), name='watch_delete'),
     path('watches/<int:watch_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('watches/<int:watch_id>/photos/<int:photo_id>/remove', views.remove_photo, name='remove_photo'),
 
-    path('accessories/', views.AccessoryList.as_view(), name="accessory_list"),
+    path('accessories/', views.AccessoryList.as_view(), name='accessory_list'),
     path('accessories/<int:pk>/', views.AccessoryDetail.as_view(), name="accessory_detail"),
     path('accessories/create/', views.AccessoryCreate.as_view(), name="accessory_create"),
     path('accessories/<int:pk>/update/', views.AccessoryUpdate.as_view(), name="accessory_update"),

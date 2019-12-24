@@ -17,7 +17,7 @@
     </div>
     <div class="col s6">
         {% if watch.photo_set.all %} {% for photo in watch.photo_set.all %}
-        <img class="responsive-img card-panel" src="{{photo.url}}"> {% endfor %} {% else %}
+        <a href="/watches/{{watch.id}}/photos/{{photo.id}}/remove"><img class="responsive-img card-panel" src="{{photo.url}}"></a> {% endfor %} {% endif %}
 
         <form action="{% url 'add_photo' watch.id %}" method="POST" enctype="multipart/form-data" class="card-panel">
             {% csrf_token %}
@@ -25,7 +25,6 @@
             <br><br>
             <input type="submit" class="btn green" value="Upload Image">
         </form>
-        {% endif %}
     </div>
     <div class='col s6'>
         {% if accessories.count %} {% for accessory in accessories %}
