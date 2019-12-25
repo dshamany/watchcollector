@@ -1,12 +1,7 @@
 from django.forms import ModelForm
-from .models import Watch, Accessory
+from .models import Service
 
-class WatchForm(ModelForm):
-    class meta:
-        model = Watch
-        fields = '__all__'
-
-class AccessoryForm(ModelForm):
-    class meta:
-        model = Accessory
-        fields = '__all__'
+class ServiceForm(ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name', 'notes', 'timestamp']

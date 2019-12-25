@@ -11,6 +11,7 @@ urlpatterns = [
     path('watches/<int:pk>/delete/', views.WatchDelete.as_view(), name='watch_delete'),
     path('watches/<int:watch_id>/add_photo/', views.add_photo, name='add_photo'),
     path('watches/<int:watch_id>/photos/<int:photo_id>/remove', views.remove_photo, name='remove_photo'),
+    path('watches/<int:watch_id>/add_service/', views.add_service, name='add_service'),
 
     path('accessories/', views.AccessoryList.as_view(), name='accessory_list'),
     path('accessories/<int:pk>/', views.AccessoryDetail.as_view(), name="accessory_detail"),

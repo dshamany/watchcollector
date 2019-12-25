@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 MOVEMENTS = (
     ('', ''),
@@ -18,7 +19,7 @@ class Accessory(models.Model):
 # Create your models here.
 class Watch(models.Model):
     make = models.CharField(max_length=100, default='')
-    model_name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100, default='')
     model_ref = models.CharField(max_length=100, default='')
     serial_number = models.CharField(max_length=100)
     band_width = models.IntegerField(default=0)
@@ -38,11 +39,19 @@ class Watch(models.Model):
     notes = models.TextField(default='')
     date_created = models.DateField(auto_now=True)
 
+    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
     def __str__(self):
         return f"{self.name} with a {self.get_movement_display()} movement."
     
     def get_absolute_url(self):
         return reverse('watches_detail', kwargs={'watch_id': self.id})
+
+class Service(models.Model):
+    name = models.CharField(max_length=200)
+    notes = models.TextField()
+    watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField()
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)

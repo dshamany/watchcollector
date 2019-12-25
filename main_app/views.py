@@ -7,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 import boto3
 import uuid
-from .models import Watch, Accessory, Photo
+from .models import Watch, Accessory, Photo, Service
+from .forms import ServiceForm
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com'
 BUCKET = 'watchcollector-1396'
@@ -36,9 +37,15 @@ class WatchCreate(LoginRequiredMixin, CreateView):
     fields = '__all__'
     success_url = '/watches/'
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 class WatchDetail(LoginRequiredMixin, DetailView):
     model = Watch
     fields = '__all__'
+    form = ServiceForm
+
 
 class WatchUpdate(LoginRequiredMixin, UpdateView):
     model = Watch
@@ -66,9 +73,21 @@ class AccessoryUpdate(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     success_url = '/accessories/'
 
-class AccessoryDelete(DeleteView):
+class AccessoryDelete(LoginRequiredMixin, DeleteView):
     model = Accessory
     success_url = '/accessories/'
+
+
+
+@login_required
+def add_service(request, watch_id):
+    form = ServiceForm(request.POST)
+
+    if form.is_valid():
+        new_service = form.save(commit=False)
+        new_service.watch_id = watch_id
+        new_service.save()
+    return redirect('watch_detail', watch_id=watch_id)
 
 # Create your views here.
 @login_required
