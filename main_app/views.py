@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 import boto3
 import uuid
-from .models import Watch, Accessory, Photo, Service
+from .models import Watch, Accessory, ProfilePhoto, Photo, Service
 from .forms import ServiceForm
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com'
@@ -26,6 +27,33 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_msg': error_msg}
     return render(request, 'registration/signup.html', context)
+
+@login_required
+def profile(request):
+    user = User.objects.get(id=request.user.id)
+    if ProfilePhoto.objects.filter(user=request.user.id):
+        return render(request, 'main_app/profile.html', {
+            'user': user,
+            'photos': ProfilePhoto.objects.filter(user=request.user.id)
+        })
+    return render(request, 'main_app/profile.html', {
+            'user': user
+        })
+
+def profile_edit(request):
+    user = User.objects.get(id=request.user.id)
+    return render(request, 'main_app/profile_edit.html', {
+        'user': user
+    })
+
+def profile_update(request):
+    user = User.objects.get(id=request.user.id)
+    user.first_name = request.POST.get('first_name')
+    user.last_name = request.POST.get('last_name')
+    user.email = request.POST.get('email')
+    user.save()
+    print(dir(user))
+    return redirect('profile')
 
 class WatchList(LoginRequiredMixin, ListView):
     model = Watch
@@ -90,9 +118,8 @@ def add_service(request, watch_id):
     return redirect('watch_detail', watch_id=watch_id)
 
 # Create your views here.
-@login_required
-def home(request):
-    return render(request, 'home.html')
+def index(request):
+    return render(request, 'index.html')
 
 @login_required
 def about(request):
@@ -131,6 +158,28 @@ def add_photo(request, watch_id):
             print('Error while uploading file to s3')
     return redirect('watch_detail', watch_id)
 
+@login_required
+def add_profile_photo(request):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        file_extension = photo_file.name[photo_file.name.rfind('.'):]
+        key = uuid.uuid4().hex[:8] + file_extension
+
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}/{BUCKET}/{key}"
+            photo = ProfilePhoto(url=url, user_id=request.user.id)
+            photo.save()
+        except:
+            print('Error while uploading file to s3')
+    return redirect('profile')
+
+
 def remove_photo(request, watch_id, photo_id):
     Photo.objects.get(id=photo_id).delete()
     return redirect('watch_detail', watch_id)
+
+def remove_profile_photo(request):
+    ProfilePhoto.objects.get(user=request.user.id).delete()
+    return redirect('profile')
