@@ -4,7 +4,7 @@
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <h4>{{ watch.model_name }}</h4>
+                <h4>{{ watch.name }}</h4>
                 <p>{{ watch.make }}</p>
                 <p>{{ watch.get_movement_display }}</p>
             </div>
@@ -19,13 +19,13 @@
                 <table>
                     <thead>
                         <th>Service</th>
-                        <th>Timestamp</th>
+                        <th>Date</th>
                     </thead>
                     <tbody>
                         {% for service in watch.service_set.all %}
                         <tr>
                             <td>{{service.name}}</td>
-                            <td>{{service.timestamp}}</td>
+                            <td>{{service.timestamp|date}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
