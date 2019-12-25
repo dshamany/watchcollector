@@ -34,7 +34,7 @@ class WatchList(LoginRequiredMixin, ListView):
 
 class WatchCreate(LoginRequiredMixin, CreateView):
     model = Watch
-    fields = '__all__'
+    fields = ['name', 'make', 'model_ref', 'serial_number', 'band_width', 'band_type', 'band_color', 'case_diameter', 'case_material', 'other_materials', 'movement', 'thickness', 'weight', 'notes']
     success_url = '/watches/'
 
     def form_valid(self, form):
