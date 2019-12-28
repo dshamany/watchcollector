@@ -76,7 +76,7 @@
         {% endif %} {% if watch.photo_set.all %} {% for photo in watch.photo_set.all %} {% if object.owner == user %}
         <a href="/watches/{{watch.id}}/photos/{{photo.id}}/remove">
             <img class="responsive-img card-panel" src="{{photo.url}}"></a> {% else %}
-        <img class="card-panel card-smaller" src="{{photo.url}}"></a>
+        <img class="card-panel" src="{{photo.url}}"></a>
         {% endif %} {% endfor %} {% endif %}
     </div>
 </div>

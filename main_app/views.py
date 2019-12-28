@@ -31,13 +31,16 @@ def signup(request):
 @login_required
 def profile(request):
     user = User.objects.get(id=request.user.id)
+    watches = Watch.objects.filter(owner=request.user.id)
     if ProfilePhoto.objects.filter(user=request.user.id):
         return render(request, 'main_app/profile.html', {
             'user': user,
-            'photos': ProfilePhoto.objects.filter(user=request.user.id)
+            'photos': ProfilePhoto.objects.filter(user=request.user.id),
+            'watches': watches
         })
     return render(request, 'main_app/profile.html', {
-            'user': user
+            'user': user,
+            'watches': watches
         })
 
 def profile_edit(request):
