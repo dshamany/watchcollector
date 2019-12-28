@@ -18,13 +18,19 @@
         <nav>
             <div class="nav-wrapper">
                 <ul>
-                    <li><a href="/" class="left brand-logo">Watch Collector</a></li>
+                    <li>
+                        <img id="logo-img" src="https://i.imgur.com/Vy6SSJi.png">
+                    </li>
+                    <li>
+                        <a href="/" class="left">
+                            <h4>Watch Collectors</h4>
+                        </a>
+                    </li>
                 </ul>
                 <ul class="right">
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'watches' %}">All Watches</a></li>
-                    <li><a href="{% url 'accessory_list' %}">Accessories</a></li>
                     <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li><a href="{% url 'logout'%}">Sign Out</a></li>
                     {% else %}
@@ -39,6 +45,9 @@
         {% block content %} {% endblock %}
     </main>
 </body>
+<footer>
+    &copy; 2020 <a href="https://github.com/dshamany" target="_blank">Daniel Shamany</a>
+</footer>
 <script>
     let selectEl = document.getElementById('id_movement');
     M.FormSelect.init(selectEl);

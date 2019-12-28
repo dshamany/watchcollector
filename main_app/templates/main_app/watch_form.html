@@ -1,14 +1,16 @@
-{% extends 'base.html' %}
-{% block content %}
-{% if object %}
-     <h1>Edit {{ object.name }}</h1>
+{% extends 'base.html' %} {% block content %} {% if object %}
+<h1>Edit {{ object.name }}</h1>
 {% endif %}
 
 <form action="" method="post">
     {% csrf_token %}
-    <table>
-        {{ form.as_p }}
-    </table>
-    <input type="submit" value="Submit" class="btn">
+    <div class="card">
+        <div class="card-content">
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Submit" class="btn green">
+        </div>
+    </div>
 </form>
 {% endblock %}

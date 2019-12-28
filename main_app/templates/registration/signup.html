@@ -2,7 +2,14 @@
 <h1>Signup</h1>
 <p class="red-text">{{error_msg}}</p>
 <form action="{% url 'signup' %}" method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <input type="submit" class="btn" value="signup">
+    {% csrf_token %}
+    <div class="card" style="max-width: 600px; margin: 100px auto;">
+        <div class="card-content">
+            <table>
+                {{form.as_table}}
+            </table>
+            <input type="submit" class="btn green" value="signup">
+        </div>
+    </div>
 </form>
 {% endblock %}

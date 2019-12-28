@@ -77,7 +77,7 @@ class WatchDetail(LoginRequiredMixin, DetailView):
 
 class WatchUpdate(LoginRequiredMixin, UpdateView):
     model = Watch
-    fields = '__all__'
+    fields = ['make', 'name', 'model_ref', 'serial_number', 'band_width', 'band_type', 'band_color', 'case_diameter', 'case_material', 'other_materials', 'watchface_color', 'movement', 'thickness', 'weight', 'notes']
     success_url = '/watches/'
 
 class WatchDelete(LoginRequiredMixin, DeleteView):
