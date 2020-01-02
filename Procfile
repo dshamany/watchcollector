@@ -1,1 +1,1 @@
-Web: gunicorn ds-watchcollector.wsgi
+Web: gunicorn watchcollector.wsgi
