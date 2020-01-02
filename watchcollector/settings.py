@@ -123,3 +123,5 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/watches/'
 LOGOUT_REDIRECT_URL = '/'
+
+django_heroku.settings(locals())
