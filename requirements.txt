@@ -15,7 +15,6 @@ certifi==2019.11.28
 cffi==1.12.3
 chardet==3.0.4
 chrome-gnome-shell==0.0.0
-cloudinary==1.19.1
 coverage==4.5.4
 cryptography==2.6.1
 cupshelpers==1.0
