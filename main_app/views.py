@@ -12,7 +12,7 @@ from .models import Watch, Accessory, ProfilePhoto, Photo, Service
 from .forms import ServiceForm
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com'
-BUCKET = 'watchcollector-1396'
+BUCKET = ''
 
 def signup(request):
     error_msg = ''
