@@ -113,6 +113,6 @@ systemd-python==234
 Tempita==0.5.1
 typed-ast==1.4.0
 uritemplate==3.0.0
-urllib3==1.25.7
+urllib3==1.25.8
 whitenoise==5.0.1
 wrapt==1.11.2
